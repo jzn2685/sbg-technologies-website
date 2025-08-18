@@ -97,11 +97,12 @@
       .stat-card {
         background: white;
         border-radius: 12px;
-        padding: 2rem;
+        padding: 1.5rem;
         text-align: center;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
         transition: all 0.3s ease;
-        min-height: 200px;
+        height: 100%;
+        min-height: 160px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -109,22 +110,27 @@
       }
 
       .stat-card i {
-        font-size: 2.5rem !important;
-        width: 60px;
-        height: 60px;
-        display: flex;
+        font-size: 2rem !important;
+        width: 50px;
+        height: 50px;
+        display: flex !important;
         align-items: center;
         justify-content: center;
+        margin: 0 auto 0.75rem !important;
       }
 
       .stat-card h4 {
-        font-size: 1.1rem !important;
-        margin-bottom: 0.5rem !important;
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+        margin: 0.5rem 0 !important;
+        color: #1e293b;
       }
 
       .stat-card p {
-        font-size: 0.875rem !important;
-        line-height: 1.4;
+        font-size: 0.813rem !important;
+        line-height: 1.3 !important;
+        margin: 0 !important;
+        color: #6c757d !important;
       }
 
       .stat-card:hover {
@@ -134,6 +140,31 @@
 
       [data-bs-theme="dark"] .stat-card {
         background: rgba(255, 255, 255, 0.05);
+      }
+      
+      [data-bs-theme="dark"] .stat-card h4 {
+        color: #fff;
+      }
+      
+      @media (max-width: 768px) {
+        .stat-card {
+          padding: 1.25rem;
+          min-height: 150px;
+        }
+        
+        .stat-card i {
+          font-size: 1.75rem !important;
+          width: 45px;
+          height: 45px;
+        }
+        
+        .stat-card h4 {
+          font-size: 0.938rem !important;
+        }
+        
+        .stat-card p {
+          font-size: 0.75rem !important;
+        }
       }
 
       .service-card {
@@ -505,33 +536,33 @@
               </div>
             </div>
             <div class="col-lg-6">
-              <div class="row g-4">
+              <div class="row g-3">
                 <div class="col-6">
-                  <div class="stat-card">
-                    <i class="bx bx-brain bx-lg text-gradient mb-3"></i>
-                    <h4 class="h5">AI 모델</h4>
-                    <p class="text-muted small mb-0">최신 딥러닝 기술 적용</p>
+                  <div class="stat-card h-100">
+                    <i class="bx bx-brain text-gradient"></i>
+                    <h4>AI 모델</h4>
+                    <p>최신 딥러닝 기술 적용</p>
                   </div>
                 </div>
                 <div class="col-6">
-                  <div class="stat-card">
-                    <i class="bx bx-data bx-lg text-gradient mb-3"></i>
-                    <h4 class="h5">빅데이터</h4>
-                    <p class="text-muted small mb-0">수만 건의 사고 데이터 학습</p>
+                  <div class="stat-card h-100">
+                    <i class="bx bx-data text-gradient"></i>
+                    <h4>빅데이터</h4>
+                    <p>수만 건의 사고 데이터 학습</p>
                   </div>
                 </div>
                 <div class="col-6">
-                  <div class="stat-card">
-                    <i class="bx bx-link bx-lg text-gradient mb-3"></i>
-                    <h4 class="h5">통합 플랫폼</h4>
-                    <p class="text-muted small mb-0">모든 서비스 원스톱 제공</p>
+                  <div class="stat-card h-100">
+                    <i class="bx bx-link text-gradient"></i>
+                    <h4>통합 플랫폼</h4>
+                    <p>모든 서비스 원스톱 제공</p>
                   </div>
                 </div>
                 <div class="col-6">
-                  <div class="stat-card">
-                    <i class="bx bx-mobile bx-lg text-gradient mb-3"></i>
-                    <h4 class="h5">모바일 지원</h4>
-                    <p class="text-muted small mb-0">언제 어디서나 접근 가능</p>
+                  <div class="stat-card h-100">
+                    <i class="bx bx-mobile text-gradient"></i>
+                    <h4>모바일 지원</h4>
+                    <p>언제 어디서나 접근 가능</p>
                   </div>
                 </div>
               </div>

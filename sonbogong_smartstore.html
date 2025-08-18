@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>손보공 AI 사고처리 서비스 - 네이버 스마트스토어</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+        
+        .store-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+        }
+        
+        /* 상품 정보 헤더 */
+        .product-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .product-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .product-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .price-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .original-price {
+            font-size: 18px;
+            text-decoration: line-through;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+        
+        .sale-price {
+            font-size: 32px;
+            font-weight: bold;
+            color: #60a5fa;
+            margin-bottom: 10px;
+        }
+        
+        .discount-rate {
+            background: #ef4444;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        /* 상품 이미지 영역 */
+        .product-images {
+            padding: 0;
+            text-align: center;
+        }
+        
+        .main-image {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #64748b;
+            border: 2px dashed #cbd5e1;
+        }
+        
+        /* 핵심 특징 */
+        .key-features {
+            padding: 40px 20px;
+            background: #f8fafc;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            width: 60px;
+            height: 3px;
+            background: #3b82f6;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #1e3a8a, #3b82f6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+        }
+        
+        .feature-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 10px;
+        }
+        
+        .feature-desc {
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        /* 서비스 플랜 */
+        .service-plans {
+            padding: 40px 20px;
+        }
+        
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .plan-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .plan-card.recommended {
+            border-color: #3b82f6;
+            transform: scale(1.05);
+        }
+        
+        .plan-card.recommended::before {
+            content: '추천';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #3b82f6;
+            color: white;
+            padding: 5px 20px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .plan-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+        
+        .plan-price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #3b82f6;
+            margin-bottom: 20px;
+        }
+        
+        .plan-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .plan-features li {
+            padding: 8px 0;
+            color: #64748b;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .plan-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .plan-button {
+            background: linear-gradient(45deg, #1e3a8a, #3b82f6);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .plan-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        /* 이용 후기 */
+        .reviews {
+            padding: 40px 20px;
+            background: #f8fafc;
+        }
+        
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .review-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #1e3a8a, #3b82f6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .reviewer-info h4 {
+            color: #1e3a8a;
+            margin-bottom: 5px;
+        }
+        
+        .reviewer-info .rating {
+            color: #fbbf24;
+        }
+        
+        .review-text {
+            color: #64748b;
+            line-height: 1.6;
+        }
+        
+        /* FAQ */
+        .faq {
+            padding: 40px 20px;
+        }
+        
+        .faq-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            background: #f8fafc;
+            padding: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #1e3a8a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-question:hover {
+            background: #e2e8f0;
+        }
+        
+        .faq-answer {
+            padding: 20px;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+            display: none;
+        }
+        
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+        
+        /* 구매 버튼 영역 */
+        .purchase-section {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            padding: 20px;
+            border-top: 1px solid #e2e8f0;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .purchase-buttons {
+            display: flex;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .cart-btn {
+            flex: 1;
+            background: white;
+            color: #3b82f6;
+            border: 2px solid #3b82f6;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cart-btn:hover {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .buy-btn {
+            flex: 2;
+            background: linear-gradient(45deg, #1e3a8a, #3b82f6);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .buy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .product-title { font-size: 22px; }
+            .sale-price { font-size: 26px; }
+            .plans-grid { grid-template-columns: 1fr; }
+            .plan-card.recommended { transform: none; }
+            .purchase-buttons { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="store-container">
+        <!-- 상품 정보 헤더 -->
+        <div class="product-header">
+            <h1 class="product-title">손보공 AI 자동차 사고처리 서비스</h1>
+            <p class="product-subtitle">빠르고 정확한 AI 기반 사고 분석 및 보고서 자동 생성</p>
+            <div class="price-info">
+                <div class="original-price">정가 500,000원</div>
+                <div class="sale-price">299,000원</div>
+                <span class="discount-rate">40% 할인</span>
+            </div>
+        </div>
+
+        <!-- 상품 이미지 -->
+        <div class="product-images">
+            <div class="main-image">
+                🚗 AI 사고처리 서비스 대표 이미지
+            </div>
+        </div>
+
+        <!-- 핵심 특징 -->
+        <div class="key-features">
+            <h2 class="section-title">왜 손보공을 선택해야 할까요?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">빠른 처리</h3>
+                    <p class="feature-desc">AI 기술로 기존 대비 90% 빠른 사고 분석 및 리포트 생성</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">정확한 분석</h3>
+                    <p class="feature-desc">머신러닝 알고리즘으로 98% 정확도의 손상 분석</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">간편한 이용</h3>
+                    <p class="feature-desc">모바일 앱으로 언제 어디서나 간편하게 사고 접수</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3 class="feature-title">원스톱 서비스</h3>
+                    <p class="feature-desc">정비업체, 보험사 연동으로 모든 과정을 한 번에</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 서비스 플랜 -->
+        <div class="service-plans">
+            <h2 class="section-title">서비스 플랜 선택</h2>
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <h3 class="plan-name">베이직</h3>
+                    <div class="plan-price">99,000원</div>
+                    <ul class="plan-features">
+                        <li>AI 사고 분석 (월 5건)</li>
+                        <li>기본 리포트 생성</li>
+                        <li>모바일 앱 이용</li>
+                        <li>이메일 지원</li>
+                    </ul>
+                    <button class="plan-button">선택하기</button>
+                </div>
+                <div class="plan-card recommended">
+                    <h3 class="plan-name">프리미엄</h3>
+                    <div class="plan-price">299,000원</div>
+                    <ul class="plan-features">
+                        <li>AI 사고 분석 (월 20건)</li>
+                        <li>상세 리포트 생성</li>
+                        <li>정비업체 연동</li>
+                        <li>보험사 연동</li>
+                        <li>24/7 전화 지원</li>
+                        <li>우선 처리</li>
+                    </ul>
+                    <button class="plan-button">선택하기</button>
+                </div>
+                <div class="plan-card">
+                    <h3 class="plan-name">엔터프라이즈</h3>
+                    <div class="plan-price">협의</div>
+                    <ul class="plan-features">
+                        <li>무제한 AI 사고 분석</li>
+                        <li>커스텀 리포트</li>
+                        <li>전담 매니저</li>
+                        <li>API 연동</li>
+                        <li>온사이트 교육</li>
+                        <li>SLA 보장</li>
+                    </ul>
+                    <button class="plan-button">문의하기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 이용 후기 -->
+        <div class="reviews">
+            <h2 class="section-title">고객 후기</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">김</div>
+                        <div class="reviewer-info">
+                            <h4>김현수 차장</h4>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="review-text">"정말 빠르고 정확해요! 기존에 하루 걸리던 사고 처리가 1시간 만에 완료됐습니다. 보험사 담당자도 깜짝 놀랐어요."</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">이</div>
+                        <div class="reviewer-info">
+                            <h4>이민정 대리</h4>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="review-text">"앱 사용법도 간단하고, 리포트 품질이 우수합니다. 정비업체 연동 서비스로 모든 게 자동으로 처리되니 너무 편해요."</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">박</div>
+                        <div class="reviewer-info">
+                            <h4>박주영 부장</h4>
+                            <div class="rating">★★★★☆</div>
+                        </div>
+                    </div>
+                    <p class="review-text">"회사에서 도입했는데 직원들 만족도가 높습니다. 사고 처리 업무가 훨씬 효율적으로 변했어요."</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="faq">
+            <h2 class="section-title">자주 묻는 질문</h2>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Q. 어떤 종류의 사고까지 분석 가능한가요?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    A. 승용차, SUV, 화물차 등 모든 차종의 접촉사고, 추돌사고, 단독사고 분석이 가능합니다. 침수나 화재 사고는 별도 문의가 필요합니다.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Q. 분석 결과의 정확도는 어느 정도인가요?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    A. 손보공의 AI는 10만 건 이상의 사고 데이터로 학습되어 98% 이상의 정확도를 보장합니다. 지속적인 학습으로 정확도는 계속 향상되고 있습니다.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Q. 기존 보험사 시스템과 연동이 가능한가요?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    A. 국내 주요 보험사와 연동 서비스를 제공하고 있으며, API를 통해 기존 시스템과의 연동도 지원합니다.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Q. 환불 정책은 어떻게 되나요?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    A. 서비스 이용 후 7일 이내 불만족 시 100% 환불해드립니다. 단, 이용 건수가 5건을 초과한 경우는 제외됩니다.
+                </div>
+            </div>
+        </div>
+
+        <!-- 구매 버튼 영역 -->
+        <div class="purchase-section">
+            <div class="purchase-buttons">
+                <button class="cart-btn">장바구니</button>
+                <button class="buy-btn">바로 구매</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // FAQ 토글 기능
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // 모든 FAQ 아이템 닫기
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                    item.querySelector('.faq-question span').textContent = '+';
+                });
+                
+                // 클릭된 아이템만 열기
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                    question.querySelector('span').textContent = '-';
+                }
+            });
+        });
+
+        // 플랜 선택 버튼
+        document.querySelectorAll('.plan-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const planName = e.target.closest('.plan-card').querySelector('.plan-name').textContent;
+                alert(`${planName} 플랜이 선택되었습니다. 결제 페이지로 이동합니다.`);
+            });
+        });
+
+        // 구매 버튼
+        document.querySelector('.cart-btn').addEventListener('click', () => {
+            alert('장바구니에 추가되었습니다.');
+        });
+
+        document.querySelector('.buy-btn').addEventListener('click', () => {
+            alert('바로 구매 페이지로 이동합니다.');
+        });
+
+        // 스크롤 시 구매 버튼 영역 강조
+        window.addEventListener('scroll', () => {
+            const purchaseSection = document.querySelector('.purchase-section');
+            if (window.scrollY > 200) {
+                purchaseSection.style.boxShadow = '0 -10px 30px rgba(0, 0, 0, 0.15)';
+            } else {
+                purchaseSection.style.boxShadow = '0 -5px 15px rgba(0, 0, 0, 0.1)';
+            }
+        });
+    </script>
+</body>
+</html>

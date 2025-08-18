@@ -1,0 +1,4 @@
+# API 프록시 설정 (CORS 우회)
+/api/*  https://api.sbg-technologies.com/api/:splat  200
+/health https://api.sbg-technologies.com/health     200
+/server-status https://api.sbg-technologies.com/     200

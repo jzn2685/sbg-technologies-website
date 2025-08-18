@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <title>SBG Technologies - 회원가입</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="SBG Technologies 회원가입 페이지">
+    <meta name="keywords" content="SBG Technologies, 회원가입, AI 자동차 사고 분석">
+    <meta name="author" content="SBG Technologies Inc.">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Theme switcher (color modes) -->
+    <script src="Silicon/assets/js/theme-switcher.js"></script>
+
+    <!-- Favicon and Touch Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="Silicon/assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="Silicon/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="Silicon/assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="Silicon/assets/favicon/site.webmanifest">
+    <link rel="mask-icon" href="Silicon/assets/favicon/safari-pinned-tab.svg" color="#6366f1">
+    <link rel="shortcut icon" href="Silicon/assets/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#080032">
+    <meta name="msapplication-config" content="Silicon/assets/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Vendor Styles -->
+    <link rel="stylesheet" media="screen" href="Silicon/assets/vendor/boxicons/css/boxicons.min.css">
+
+    <!-- Main Theme Styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="Silicon/assets/css/theme.min.css">
+
+    <!-- Custom Styles -->
+    <style>
+      .text-gradient {
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .btn-gradient {
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+        border: none;
+        color: white;
+        transition: all 0.3s ease;
+      }
+
+      .btn-gradient:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        color: white;
+      }
+
+      .auth-bg {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .auth-bg::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+          radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+      }
+
+      .auth-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        max-width: 1000px;
+        width: 100%;
+      }
+
+      [data-bs-theme="dark"] .auth-card {
+        background: #1e293b;
+      }
+
+      .auth-side-image {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 3rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+      }
+
+      .form-control:focus {
+        border-color: #6366f1;
+        box-shadow: 0 0 0 0.25rem rgba(99, 102, 241, 0.25);
+      }
+
+      .password-toggle {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #6c757d;
+        cursor: pointer;
+        padding: 0.375rem;
+      }
+
+      .password-toggle:hover {
+        color: #6366f1;
+      }
+
+      .password-strength {
+        height: 4px;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+        margin-top: 0.5rem;
+      }
+
+      .password-strength.weak {
+        background: #dc3545;
+        width: 33%;
+      }
+
+      .password-strength.medium {
+        background: #ffc107;
+        width: 66%;
+      }
+
+      .password-strength.strong {
+        background: #28a745;
+        width: 100%;
+      }
+
+      /* Page loading styles */
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      [data-bs-theme="dark"] .page-loading {
+        background-color: #0b0f19;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #9397ad;
+      }
+      [data-bs-theme="dark"] .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        border: .15em solid #b4b7c9;
+        border-right-color: transparent;
+        border-radius: 50%;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      [data-bs-theme="dark"] .page-spinner {
+        border-color: rgba(255,255,255,.4);
+        border-right-color: transparent;
+      }
+      @-webkit-keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () {
+            preloader.remove();
+          }, 1000);
+        };
+      })();
+    </script>
+  </head>
+
+  <!-- Body -->
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div><span>Loading...</span>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <main class="auth-bg">
+      <div class="container position-relative zindex-5 px-3 py-5">
+        <div class="auth-card">
+          <div class="row g-0">
+            <!-- Left side - Image/Info -->
+            <div class="col-lg-5 auth-side-image d-none d-lg-flex">
+              <div>
+                <h2 class="h3 mb-4">SBG Technologies와<br>함께하세요</h2>
+                <div class="mb-4">
+                  <div class="d-flex align-items-start mb-3">
+                    <i class="bx bx-check-circle bx-sm me-2 mt-1"></i>
+                    <div>
+                      <h5 class="h6 mb-1">AI 기반 사고 분석</h5>
+                      <p class="fs-sm mb-0 opacity-90">최첨단 AI로 정확한 사고 분석</p>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-start mb-3">
+                    <i class="bx bx-check-circle bx-sm me-2 mt-1"></i>
+                    <div>
+                      <h5 class="h6 mb-1">실시간 처리</h5>
+                      <p class="fs-sm mb-0 opacity-90">빠르고 효율적인 사고 처리</p>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-start mb-3">
+                    <i class="bx bx-check-circle bx-sm me-2 mt-1"></i>
+                    <div>
+                      <h5 class="h6 mb-1">통합 플랫폼</h5>
+                      <p class="fs-sm mb-0 opacity-90">보험사, 정비업체 원스톱 연동</p>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-start">
+                    <i class="bx bx-check-circle bx-sm me-2 mt-1"></i>
+                    <div>
+                      <h5 class="h6 mb-1">24/7 지원</h5>
+                      <p class="fs-sm mb-0 opacity-90">언제든지 이용 가능한 서비스</p>
+                    </div>
+                  </div>
+                </div>
+                <hr class="my-4 opacity-50">
+                <div class="text-center">
+                  <p class="fs-sm mb-2 opacity-90">이미 1,000+ 기업이 사용 중</p>
+                  <div class="d-flex justify-content-center gap-2">
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right side - Form -->
+            <div class="col-lg-7 p-4 p-sm-5">
+              <div class="w-100" style="max-width: 450px; margin: 0 auto;">
+                <!-- Logo -->
+                <div class="mb-4">
+                  <a href="index-silicon.html" class="d-inline-flex align-items-center text-decoration-none">
+                    <h3 class="text-gradient mb-0">SBG Technologies</h3>
+                  </a>
+                </div>
+
+                <!-- Title -->
+                <h1 class="h2 mb-2">회원가입</h1>
+                <p class="text-muted mb-4">AI 자동차 사고 처리 서비스를 시작하세요</p>
+
+                <!-- Form -->
+                <form id="signup-form" class="needs-validation" novalidate>
+                  <div class="row">
+                    <!-- Name -->
+                    <div class="col-sm-6 mb-3">
+                      <label for="firstName" class="form-label">이름</label>
+                      <input type="text" class="form-control" id="firstName" placeholder="홍" required>
+                      <div class="invalid-feedback">
+                        이름을 입력해주세요.
+                      </div>
+                    </div>
+                    
+                    <!-- Last Name -->
+                    <div class="col-sm-6 mb-3">
+                      <label for="lastName" class="form-label">성</label>
+                      <input type="text" class="form-control" id="lastName" placeholder="길동" required>
+                      <div class="invalid-feedback">
+                        성을 입력해주세요.
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Email -->
+                  <div class="mb-3">
+                    <label for="email" class="form-label">이메일</label>
+                    <input type="email" class="form-control" id="email" placeholder="your@email.com" required>
+                    <div class="invalid-feedback">
+                      올바른 이메일 주소를 입력해주세요.
+                    </div>
+                  </div>
+
+                  <!-- Phone -->
+                  <div class="mb-3">
+                    <label for="phone" class="form-label">휴대폰 번호</label>
+                    <input type="tel" class="form-control" id="phone" placeholder="010-0000-0000" required>
+                    <div class="invalid-feedback">
+                      휴대폰 번호를 입력해주세요.
+                    </div>
+                  </div>
+
+                  <!-- Company -->
+                  <div class="mb-3">
+                    <label for="company" class="form-label">회사명 (선택)</label>
+                    <input type="text" class="form-control" id="company" placeholder="회사명">
+                  </div>
+
+                  <!-- Password -->
+                  <div class="mb-3">
+                    <label for="password" class="form-label">비밀번호</label>
+                    <div class="position-relative">
+                      <input type="password" class="form-control" id="password" placeholder="8자 이상 입력" required>
+                      <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                        <i class="bx bx-show"></i>
+                      </button>
+                      <div class="invalid-feedback">
+                        비밀번호는 8자 이상이어야 합니다.
+                      </div>
+                    </div>
+                    <div class="password-strength" id="passwordStrength"></div>
+                    <small class="text-muted">영문, 숫자, 특수문자를 포함하여 8자 이상</small>
+                  </div>
+
+                  <!-- Confirm Password -->
+                  <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">비밀번호 확인</label>
+                    <div class="position-relative">
+                      <input type="password" class="form-control" id="confirmPassword" placeholder="비밀번호 재입력" required>
+                      <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                        <i class="bx bx-show"></i>
+                      </button>
+                      <div class="invalid-feedback">
+                        비밀번호가 일치하지 않습니다.
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Terms -->
+                  <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="terms" required>
+                    <label class="form-check-label" for="terms">
+                      <a href="terms-of-service.pdf" target="_blank">이용약관</a> 및 
+                      <a href="privacy-policy-ko.html" target="_blank">개인정보처리방침</a>에 동의합니다
+                    </label>
+                    <div class="invalid-feedback">
+                      약관에 동의해주세요.
+                    </div>
+                  </div>
+
+                  <!-- Marketing -->
+                  <div class="form-check mb-4">
+                    <input type="checkbox" class="form-check-input" id="marketing">
+                    <label class="form-check-label" for="marketing">
+                      마케팅 정보 수신 동의 (선택)
+                    </label>
+                  </div>
+
+                  <!-- Submit button -->
+                  <button type="submit" class="btn btn-gradient btn-lg w-100 mb-3">
+                    회원가입
+                  </button>
+
+                  <!-- Sign in link -->
+                  <p class="text-center mb-0">
+                    이미 계정이 있으신가요? 
+                    <a href="login-silicon.html" class="fw-semibold">로그인</a>
+                  </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Theme mode switch -->
+        <div class="position-fixed top-0 end-0 p-3">
+          <div class="form-check form-switch mode-switch" data-bs-toggle="mode">
+            <input type="checkbox" class="form-check-input" id="theme-mode">
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Light</label>
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Dark</label>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Vendor Scripts -->
+    <script src="Silicon/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Main Theme Script -->
+    <script src="Silicon/assets/js/theme.min.js"></script>
+
+    <!-- Custom Scripts -->
+    <script>
+      // Password visibility toggle
+      function togglePassword(fieldId) {
+        const field = document.getElementById(fieldId);
+        const button = field.nextElementSibling;
+        const icon = button.querySelector('i');
+        
+        if (field.type === 'password') {
+          field.type = 'text';
+          icon.classList.remove('bx-show');
+          icon.classList.add('bx-hide');
+        } else {
+          field.type = 'password';
+          icon.classList.remove('bx-hide');
+          icon.classList.add('bx-show');
+        }
+      }
+
+      // Password strength checker
+      document.getElementById('password').addEventListener('input', function() {
+        const password = this.value;
+        const strengthBar = document.getElementById('passwordStrength');
+        
+        if (password.length === 0) {
+          strengthBar.className = 'password-strength';
+          return;
+        }
+        
+        let strength = 0;
+        if (password.length >= 8) strength++;
+        if (password.match(/[a-z]+/)) strength++;
+        if (password.match(/[A-Z]+/)) strength++;
+        if (password.match(/[0-9]+/)) strength++;
+        if (password.match(/[$@#&!]+/)) strength++;
+        
+        if (strength <= 2) {
+          strengthBar.className = 'password-strength weak';
+        } else if (strength === 3 || strength === 4) {
+          strengthBar.className = 'password-strength medium';
+        } else {
+          strengthBar.className = 'password-strength strong';
+        }
+      });
+
+      // Form validation and submission
+      document.getElementById('signup-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Check password match
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        
+        if (password !== confirmPassword) {
+          document.getElementById('confirmPassword').classList.add('is-invalid');
+          return;
+        } else {
+          document.getElementById('confirmPassword').classList.remove('is-invalid');
+        }
+        
+        // Bootstrap validation
+        if (!this.checkValidity()) {
+          e.stopPropagation();
+          this.classList.add('was-validated');
+          return;
+        }
+        
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>처리 중...';
+        submitBtn.disabled = true;
+        
+        try {
+          const formData = {
+            firstName: this.firstName.value,
+            lastName: this.lastName.value,
+            email: this.email.value,
+            phone: this.phone.value,
+            company: this.company.value,
+            password: this.password.value,
+            terms: this.terms.checked,
+            marketing: this.marketing.checked
+          };
+          
+          // 여기에 실제 API 호출 로직 추가
+          // const response = await fetch('/api/signup', {...});
+          
+          // 임시로 성공 메시지 표시
+          await new Promise(resolve => setTimeout(resolve, 1500)); // 시뮬레이션
+          
+          alert('회원가입이 완료되었습니다! 로그인 페이지로 이동합니다.');
+          window.location.href = 'login-silicon.html';
+          
+        } catch (error) {
+          console.error('회원가입 오류:', error);
+          alert('회원가입 중 오류가 발생했습니다. 다시 시도해 주세요.');
+        } finally {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>

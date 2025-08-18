@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서버 연결 테스트</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .test-result {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f0f0f0;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>손보공 서버 연결 테스트</h1>
+    
+    <button onclick="testConnection()">서버 연결 테스트</button>
+    
+    <div id="results"></div>
+    
+    <script>
+        async function testConnection() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<p>테스트 중...</p>';
+            
+            const tests = [
+                {
+                    name: 'API 서버 접속',
+                    url: 'https://api.sbg-technologies.com',
+                    method: 'GET'
+                },
+                {
+                    name: 'Health 체크',
+                    url: 'https://api.sbg-technologies.com/health',
+                    method: 'GET'
+                },
+                {
+                    name: '로컬 서버 (3000)',
+                    url: 'http://localhost:3000',
+                    method: 'GET'
+                }
+            ];
+            
+            let html = '';
+            
+            for (const test of tests) {
+                try {
+                    const response = await fetch(test.url, {
+                        method: test.method,
+                        mode: 'no-cors' // CORS 우회
+                    });
+                    html += `<div class="test-result success">✅ ${test.name}: 접속 가능</div>`;
+                } catch (error) {
+                    html += `<div class="test-result error">❌ ${test.name}: ${error.message}</div>`;
+                }
+            }
+            
+            // 추가 정보
+            html += `
+                <div class="test-result">
+                    <h3>현재 상황:</h3>
+                    <ul>
+                        <li>현재 URL: ${window.location.href}</li>
+                        <li>프로토콜: ${window.location.protocol}</li>
+                        <li>로컬 파일 여부: ${window.location.protocol === 'file:'}</li>
+                    </ul>
+                    ${window.location.protocol === 'file:' ? 
+                        '<p style="color: red;">⚠️ 로컬 파일로 열었습니다. CORS 제약으로 API 호출이 제한됩니다.</p>' : ''}
+                </div>
+            `;
+            
+            resultsDiv.innerHTML = html;
+        }
+        
+        // 페이지 로드 시 자동 실행
+        window.onload = testConnection;
+    </script>
+</body>
+</html>

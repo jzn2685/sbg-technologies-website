@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - SBG Technologies Inc.</title>
+    <meta name="description" content="SBG Technologies Inc. 로그인">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', Arial, sans-serif;
+            background: #0a0e27;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: rgba(30, 58, 138, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-icon::before,
+        .logo-icon::after,
+        .logo-icon .diamond-1,
+        .logo-icon .diamond-2 {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background: white;
+            transform: rotate(45deg);
+            border-radius: 2px;
+        }
+        
+        .logo-icon::before {
+            top: 2px;
+            left: 13px;
+        }
+        
+        .logo-icon::after {
+            bottom: 2px;
+            left: 13px;
+        }
+        
+        .logo-icon .diamond-1 {
+            top: 13px;
+            left: 2px;
+        }
+        
+        .logo-icon .diamond-2 {
+            top: 13px;
+            right: 2px;
+        }
+        
+        /* Main Content */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 0;
+            background: radial-gradient(ellipse at center, rgba(29, 78, 216, 0.15) 0%, transparent 70%);
+        }
+        
+        .login-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .login-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, white, #93c5fd);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .login-header p {
+            color: #94a3b8;
+        }
+        
+        /* 소셜 로그인 섹션 */
+        .social-login-section {
+            margin-bottom: 2rem;
+        }
+        
+        .social-login-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .social-btn {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            text-decoration: none;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .social-btn.kakao {
+            background: #FEE500;
+            color: #000000;
+        }
+        
+        .social-btn.naver {
+            background: #03C75A;
+            color: white;
+        }
+        
+        .social-btn.google {
+            background: white;
+            color: #666;
+            border: 1px solid #ddd;
+        }
+        
+        .social-btn.apple {
+            background: #000000;
+            color: white;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .divider span {
+            padding: 0 1rem;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #e0e7ff;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #60a5fa;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+        }
+        
+        .form-group input::placeholder {
+            color: #94a3b8;
+        }
+        
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .remember-me label {
+            cursor: pointer;
+            color: #e0e7ff;
+        }
+        
+        .forgot-password {
+            color: #60a5fa;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(45deg, #1e3a8a, #3b82f6);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .signup-link {
+            text-align: center;
+            margin-top: 2rem;
+            color: #94a3b8;
+        }
+        
+        .signup-link a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+        
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1e3a8a;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 2rem;
+            }
+            
+            .login-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <span class="diamond-1"></span>
+                    <span class="diamond-2"></span>
+                </div>
+                SBG Technologies Inc.
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="login-container">
+            <div class="login-header">
+                <h1>로그인</h1>
+                <p>SBG Technologies 서비스에 오신 것을 환영합니다</p>
+            </div>
+
+            <!-- 소셜 로그인 섹션 -->
+            <div class="social-login-section">
+                <div class="social-login-buttons">
+                    <button type="button" class="social-btn kakao" onclick="handleSocialLogin('kakao')">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M10 0C4.477 0 0 3.697 0 8.26c0 2.908 1.812 5.461 4.547 6.926l-.773 2.812c-.07.254.184.463.42.344l3.434-1.712c.367.033.74.05 1.118.05 5.523 0 10-3.697 10-8.26S15.523 0 10 0z" fill="#000"/>
+                        </svg>
+                        카카오로 계속하기
+                    </button>
+                    <button type="button" class="social-btn naver" onclick="handleSocialLogin('naver')">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M13.426 10.788L6.389 0H0v20h6.574V9.212L13.611 20H20V0h-6.574v10.788z" fill="#fff"/>
+                        </svg>
+                        네이버로 계속하기
+                    </button>
+                    <button type="button" class="social-btn google" onclick="handleSocialLogin('google')">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M19.6 10.227c0-.709-.064-1.39-.182-2.045H10v3.868h5.382a4.6 4.6 0 01-1.996 3.018v2.51h3.232c1.891-1.742 2.982-4.305 2.982-7.35z" fill="#4285F4"/>
+                            <path d="M10 20c2.7 0 4.964-.895 6.618-2.423l-3.232-2.509c-.895.6-2.04.955-3.386.955-2.605 0-4.81-1.76-5.595-4.123H1.064v2.59A9.996 9.996 0 0010 20z" fill="#34A853"/>
+                            <path d="M4.405 11.9c-.2-.6-.314-1.24-.314-1.9 0-.66.114-1.3.314-1.9V5.51H1.064A9.996 9.996 0 000 10c0 1.614.386 3.14 1.064 4.49l3.34-2.59z" fill="#FBBC05"/>
+                            <path d="M10 3.977c1.468 0 2.786.505 3.823 1.496l2.868-2.868C14.959.99 12.695 0 10 0 6.09 0 2.71 2.24 1.064 5.51l3.34 2.59C5.192 5.736 7.396 3.977 10 3.977z" fill="#EA4335"/>
+                        </svg>
+                        Google로 계속하기
+                    </button>
+                    <button type="button" class="social-btn apple" onclick="handleSocialLogin('apple')">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M15.97 17.357c-.878.976-1.84 1.467-2.802 1.467-.51 0-1.184-.173-2.025-.52-.84-.345-1.561-.518-2.161-.518-.654 0-1.362.173-2.125.52-.762.345-1.38.518-1.852.518-1.145 0-2.287-.784-3.424-2.351C.444 14.856 0 13.08 0 11.156c0-1.896.458-3.447 1.375-4.653.916-1.205 2.14-1.808 3.671-1.808.6 0 1.362.156 2.287.47.925.313 1.521.47 1.789.47.374 0 .964-.157 1.77-.47.807-.314 1.508-.47 2.104-.47.843 0 1.594.184 2.251.551.657.368 1.205.878 1.643 1.531a5.816 5.816 0 00-1.633 1.878 5.242 5.242 0 00-.614 2.474c0 .92.245 1.774.735 2.56a5.11 5.11 0 001.83 1.77c-.134.43-.328.891-.58 1.384-.504.96-1.114 1.736-1.83 2.33l-.828.284zM13.365 0c0 .706-.256 1.435-.767 2.185-.51.751-1.276 1.306-2.3 1.658a2.84 2.84 0 01-.089-.66c0-.692.294-1.439.88-2.171.294-.371.67-.682 1.127-.932A3.527 3.527 0 0113.365 0z" fill="#fff"/>
+                        </svg>
+                        Apple로 계속하기
+                    </button>
+                </div>
+            </div>
+
+            <div class="divider">
+                <span>또는 이메일로 로그인</span>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">이메일</label>
+                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                    <span class="error-message" id="emailError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">비밀번호</label>
+                    <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required>
+                    <span class="error-message" id="passwordError"></span>
+                </div>
+
+                <div class="form-options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">로그인 상태 유지</label>
+                    </div>
+                    <a href="#" class="forgot-password">비밀번호 찾기</a>
+                </div>
+
+                <button type="submit" class="submit-btn">로그인</button>
+            </form>
+
+            <div class="signup-link">
+                아직 계정이 없으신가요? <a href="signup.html">회원가입</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 SBG Technologies Inc. All rights reserved.</p>
+            <div style="margin-top: 1rem;">
+                <a href="privacy-policy.pdf" target="_blank" style="color: white; text-decoration: underline; margin-right: 1rem;">개인정보 처리방침</a>
+                <a href="terms-of-service.pdf" target="_blank" style="color: white; text-decoration: underline;">서비스 이용약관</a>
+            </div>
+            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.2); color: #e0e7ff; font-size: 0.9rem;">
+                <p>사업자등록번호: 403-66-00864</p>
+                <p>주소: 경기도 성남시 중원구 둔촌대로 135번길 14-13, 101호, 13372</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 이메일 유효성 검사
+        const email = document.getElementById('email');
+        email.addEventListener('input', function() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (this.value && !emailRegex.test(this.value)) {
+                document.getElementById('emailError').textContent = '올바른 이메일 형식이 아닙니다.';
+                document.getElementById('emailError').classList.add('show');
+            } else {
+                document.getElementById('emailError').classList.remove('show');
+            }
+        });
+
+        // 폼 제출
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '로그인 중...';
+            submitBtn.disabled = true;
+            
+            // 폼 데이터 수집
+            const formData = {
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+                remember: document.getElementById('remember').checked
+            };
+            
+            try {
+                // API 호출 시뮬레이션 (실제로는 서버 API 호출)
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // 성공 시
+                alert('로그인이 완료되었습니다!');
+                
+                // 로그인 상태 저장 (실제로는 토큰 저장)
+                if (formData.remember) {
+                    localStorage.setItem('userEmail', formData.email);
+                }
+                
+                // 메인 페이지로 이동
+                window.location.href = 'index.html';
+            } catch (error) {
+                document.getElementById('passwordError').textContent = '이메일 또는 비밀번호가 일치하지 않습니다.';
+                document.getElementById('passwordError').classList.add('show');
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+        
+        // 소셜 로그인 처리
+        function handleSocialLogin(provider) {
+            const providers = {
+                kakao: {
+                    name: '카카오',
+                    authUrl: 'https://kauth.kakao.com/oauth/authorize',
+                    clientId: 'YOUR_KAKAO_CLIENT_ID'
+                },
+                naver: {
+                    name: '네이버',
+                    authUrl: 'https://nid.naver.com/oauth2.0/authorize',
+                    clientId: 'YOUR_NAVER_CLIENT_ID'
+                },
+                google: {
+                    name: '구글',
+                    authUrl: 'https://accounts.google.com/o/oauth2/v2/auth',
+                    clientId: 'YOUR_GOOGLE_CLIENT_ID'
+                },
+                apple: {
+                    name: 'Apple',
+                    authUrl: 'https://appleid.apple.com/auth/authorize',
+                    clientId: 'YOUR_APPLE_CLIENT_ID'
+                }
+            };
+            
+            const selectedProvider = providers[provider];
+            if (!selectedProvider) return;
+            
+            // 실제 구현 시에는 각 소셜 로그인 제공업체의 OAuth 프로세스를 구현해야 합니다
+            alert(`${selectedProvider.name} 로그인 기능은 준비 중입니다.\n\n실제 서비스에서는 ${selectedProvider.name} OAuth 인증을 통해 간편하게 로그인하실 수 있습니다.`);
+            
+            // 실제 구현 예시:
+            // const redirectUri = encodeURIComponent(window.location.origin + '/auth/callback');
+            // const scope = provider === 'kakao' ? 'profile_nickname,account_email' : 'email,profile';
+            // const state = generateRandomState();
+            // sessionStorage.setItem('oauth_state', state);
+            // window.location.href = `${selectedProvider.authUrl}?client_id=${selectedProvider.clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&state=${state}`;
+        }
+        
+        // 비밀번호 찾기
+        document.querySelector('.forgot-password').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('비밀번호 재설정 이메일을 보내드립니다.\n등록하신 이메일 주소를 확인해주세요.');
+        });
+    </script>
+</body>
+</html>
